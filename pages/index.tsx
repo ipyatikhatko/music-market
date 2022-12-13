@@ -1,80 +1,56 @@
-import { Flex } from '@chakra-ui/layout'
-import { Box, Breadcrumb, Text, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator, Container, Menu, MenuButton, MenuList, MenuItem, Button, InputGroup, InputRightAddon, Input, InputRightElement, Spacer, Icon, Divider, Wrap, Badge, VStack, HStack } from '@chakra-ui/react'
-import Head from 'next/head'
-import Image from 'next/image'
-import { Search2Icon, } from '@chakra-ui/icons'
-import { FiHeart, FiShoppingCart } from 'react-icons/fi'
+import { Container, Divider, VStack, Text, Box, HStack, Flex } from '@chakra-ui/react'
+import Header from '../components/Header';
+import ItemCard from '../components/ItemCard';
+import PopularCategories from '../components/PopularCategories';
+
+export interface MarketItem {
+  label: string;
+	image: string;
+	price: number;
+}
+
+const mockItems: MarketItem[] = [
+  {
+    label: 'Fender Jazzmaster',
+    image: 'https://images.unsplash.com/photo-1546921888-e443f8c96a31?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80',
+    price: 860.99,
+  },
+  {
+    label: 'Gibson ES-335',
+    image: 'https://images.unsplash.com/photo-1585664590430-e8e61d8ce91e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+    price: 1640.99,
+  },
+  {
+    label: 'Fender Stratocaster',
+    image: 'https://images.unsplash.com/photo-1606043357323-69163e39abfc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=776&q=80',
+    price: 1260.99,
+  },
+  {
+    label: 'Fender Telecaster',
+    image: 'https://images.unsplash.com/photo-1587519914586-0141ede999a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=652&q=80',
+    price: 1139.99,
+  }
+]
 
 export default function Home() {
   return (
     <>
-      <Container maxW='container.lg'>
-        <Flex py={8} gap={4} my={4} borderRadius={12} height={12}>
-          <Box display='flex' justifyContent='center' alignItems='center'>
-            <Text fontSize='lg'>Logo</Text>
-          </Box>
-          <Box width='full' display='flex' justifyItems='center' alignItems='center'>          
-            <Flex gap={4} justify='space-between' align='center' flex={5}>
-              <InputGroup flex={7}>
-                <Input borderRadius={20} placeholder='Search offers...' />
-                <InputRightElement>
-                  <Search2Icon/>
-                </InputRightElement>
-              </InputGroup>
-              <Button flex={1} borderRadius={100} borderWidth={2} variant='secondary' colorScheme='blackAlpha'>
-                Sell gear
-              </Button>
-              <Flex direction='column' align='center' justify='center' flex={1}>
-                <Icon fontSize='xl' as={FiHeart}/>
-                <Text fontSize='xs'>Watch list</Text>
-              </Flex>         
-              <Flex direction='column' align='center' justify='center' flex={1}>
-                <Icon fontSize='xl' as={FiShoppingCart}/>
-                <Text fontSize='xs'>Cart</Text>
-              </Flex>
-            </Flex>
-            <Spacer/>
-            <Box flexDir='column' alignItems='center' justifyContent='center'>
-              <Text fontSize='xs'>Sign up</Text>
-              <Text fontSize='xs'>Log In</Text>
-            </Box>   
-          </Box>
-        </Flex>
-      </Container>
+      <Header/>
       <Divider/>
-      <Container maxW='container.lg' pt={5}>
-        <Flex>
-          <VStack w={300} flex={1} alignItems='flex-start' justifyContent='flex-start'>
-            <Text fontSize='2xl'>Guitars:</Text>
-                <Wrap>
-              {['fender', 'gibson', 'esp', ].map(tag => (
-                <Button w={100} p={2} borderRadius={100} height='auto' key={tag}>
-                  <Text fontSize='sm'>#{tag}</Text>
-                </Button>
+      <Container maxW='container.lg'>
+        <PopularCategories/>
+        <Box mt={10}>
+          <Flex direction='column' justify='flex-start'>
+            <Text fontSize='3xl'>
+              New items
+            </Text>
+            <Flex w='full' display='flex' justify='space-between'>
+              {mockItems.map(item => (
+                <ItemCard key={item.label} item={item}/>
               ))}
-            </Wrap>
-          </VStack>
-          <VStack w={300} flex={1} alignItems='flex-start' justifyContent='flex-start'>
-            <Text fontSize='2xl'>Basses:</Text>
-                <Wrap>
-              {['fender', 'gibson', 'esp', 'Warwick'].map(tag => (
-                <Button w={100} p={2} borderRadius={100} height='auto' key={tag}>
-                  <Text fontSize='sm'>#{tag}</Text>
-                </Button>
-              ))}
-            </Wrap>
-          </VStack>
-          <VStack w={300} flex={1} alignItems='flex-start' justifyContent='flex-start'>
-            <Text fontSize='2xl'>Effects:</Text>
-                <Wrap>
-              {['wah-wah', 'distortion', 'chorus', 'delay', 'reverb', 'tuner' ].map(tag => (
-                <Button w={100} p={2} borderRadius={100} height='auto' key={tag}>
-                  <Text fontSize='sm'>#{tag}</Text>
-                </Button>
-              ))}
-            </Wrap>
-          </VStack>
-        </Flex>
+            </Flex>
+          </Flex>
+        </Box>
       </Container>
     </>
   )
